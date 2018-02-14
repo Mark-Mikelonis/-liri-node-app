@@ -102,7 +102,7 @@ function getMovie(arr){
         console.log("Movie Title: " + JSON.parse(body).Title);
         console.log("Year: " + JSON.parse(body).Year);
         console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-        // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
         console.log("Language: " + JSON.parse(body).Language);
         console.log("Plot: " + JSON.parse(body).Plot);
         console.log("Actors: " + JSON.parse(body).Actors);
