@@ -4,12 +4,8 @@ var Spotify = require("node-spotify-api");
 var Twitter = require("twitter");
 var fs = require("fs");
 
-var client = new Twitter(keys);
-var spotify = new Spotify({
-	id: "24ee2a140dad4d7bafefaa47ef8b5ffd",
-	secret: "3361a88a32644371a86bb4418876b8a1"
-
-});
+var client = new Twitter(keys.twitter);
+var spotify = new Spotify(keys.spotify);
 var queryString="";
 var command = process.argv[2];
 var argsArr = [];
@@ -41,7 +37,7 @@ function tweets(){
    for(var i=0;i<20;i++){
    		console.log("=================================");
     	console.log("\nCreated at: " + tweets[i].created_at +"\nTweet: " + tweets[i].text);
-    	// console.log("=================================");
+    	console.log("");
     }
   }
 });
@@ -54,7 +50,7 @@ function getSpotifyTrack(arr){
 		} else {
 			for(var i=2;i<arr.length;i++){
 				if (i === arr.length -1){
-				queryString += arr[i]; 
+					queryString += arr[i]; 
 				} else {
 					queryString += arr[i] + "+"; 
 				}
@@ -62,7 +58,7 @@ function getSpotifyTrack(arr){
 		}
 	} 
 	
-	
+
 	
 	console.log(queryString);
 	spotify.search({type: "track", query: queryString})
@@ -80,17 +76,19 @@ function getSpotifyTrack(arr){
 }
 
 function getMovie(arr){
-	if (arr.length === 2) {
-		queryString = "Mr. Nobody";
-	} else {
-		for(var i=2;i<arr.length;i++){
-			if (i === arr.length -1){
-				queryString += arr[i]; 
-			} else {
-				queryString += arr[i] + "+"; 
+	if(!queryString){
+		if (arr.length === 2) {
+			queryString = "Mr. Nobody";
+		} else {
+			for(var i=2;i<arr.length;i++){
+				if (i === arr.length -1){
+					queryString += arr[i]; 
+				} else {
+					queryString += arr[i] + "+"; 
+				}
 			}
 		}
-	}
+	}	
 	request("http://www.omdbapi.com/?t="+queryString+"&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
     // If the request is successful (i.e. if the response status code is 200)
@@ -117,7 +115,7 @@ function doIt(){
 		if(err){
 			console.log(err);
 		}
-		console.log(data);
+		// console.log(data);
 		data = data.trim();
 		var instructions = data.split(",");
 		command = instructions[0];
@@ -140,10 +138,3 @@ function doIt(){
 	
 }
 
-
-console.log(keys);
-
-// tweets();
-// getSpotifyTrack();
-// getMovie();
-//doIt();
