@@ -45,10 +45,10 @@ function tweets(){
 
 function getSpotifyTrack(arr){
 	if(!queryString){
-		if (arr.length === 2) {
+		if (process.argv.length === 3) {
 		queryString = "The Sign";
 		} else {
-			for(var i=2;i<arr.length;i++){
+			for(var i=0;i<arr.length;i++){
 				if (i === arr.length -1){
 					queryString += arr[i]; 
 				} else {
@@ -77,11 +77,11 @@ function getSpotifyTrack(arr){
 
 function getMovie(arr){
 	if(!queryString){
-		if (arr.length === 2) {
+		if (process.argv.length === 3) {
 			queryString = "Mr. Nobody";
 		} else {
-			for(var i=2;i<arr.length;i++){
-				if (i === arr.length -1){
+			for(var i=0;i<arr.length;i++){
+				if (i === (arr.length -1)){
 					queryString += arr[i]; 
 				} else {
 					queryString += arr[i] + "+"; 
@@ -89,11 +89,12 @@ function getMovie(arr){
 			}
 		}
 	}	
+	console.log("queryString: "+queryString);
 	request("http://www.omdbapi.com/?t="+queryString+"&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
     // If the request is successful (i.e. if the response status code is 200)
     if (!error && response.statusCode === 200) {
-
+    	console.log("queryString: "+queryString);
         // Parse the body of the site and recover just the imdbRating
         // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
         // console.log("The movie's rating is: " + body); //JSON.parse(body));//.imdbRating);
@@ -101,7 +102,7 @@ function getMovie(arr){
         console.log("Movie Title: " + JSON.parse(body).Title);
         console.log("Year: " + JSON.parse(body).Year);
         console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+        // console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
         console.log("Language: " + JSON.parse(body).Language);
         console.log("Plot: " + JSON.parse(body).Plot);
         console.log("Actors: " + JSON.parse(body).Actors);
