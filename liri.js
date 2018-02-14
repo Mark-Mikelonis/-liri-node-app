@@ -60,7 +60,7 @@ function getSpotifyTrack(arr){
 	
 
 	
-	console.log(queryString);
+	
 	spotify.search({type: "track", query: queryString})
 		.then(function(response){
 		console.log("==================================");
@@ -89,15 +89,11 @@ function getMovie(arr){
 			}
 		}
 	}	
-	console.log("queryString: "+queryString);
+	
 	request("http://www.omdbapi.com/?t="+queryString+"&y=&plot=short&apikey=40e9cece", function(error, response, body) {
 
-    // If the request is successful (i.e. if the response status code is 200)
     if (!error && response.statusCode === 200) {
-    	console.log("queryString: "+queryString);
-        // Parse the body of the site and recover just the imdbRating
-        // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-        // console.log("The movie's rating is: " + body); //JSON.parse(body));//.imdbRating);
+    	
         console.log("==================================");
         console.log("Movie Title: " + JSON.parse(body).Title);
         console.log("Year: " + JSON.parse(body).Year);
@@ -116,12 +112,12 @@ function doIt(){
 		if(err){
 			console.log(err);
 		}
-		// console.log(data);
+		
 		data = data.trim();
 		var instructions = data.split(",");
 		command = instructions[0];
 		queryString = instructions[1];
-		// console.log(command);
+		
 		switch (command){
 	case "my-tweets":
 		tweets();
